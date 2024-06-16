@@ -1,95 +1,68 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useState } from 'react';
+import { Container, Grid, Box, Typography } from '@mui/material';
+import SearchBar from './components/SearchBar';
+import ManufacturerCard from './components/ManufacturerCard';
+import CarModelDetails from './components/CarModelDetails';
+import data from './data/cardata.json';
+
+export default function HomePage() {
+  const [selectedManufacturer, setSelectedManufacturer] = useState<any | null>(null);
+  const [selectedModel, setSelectedModel] = useState<any | null>(null);
+  const [filteredCars, setFilteredCars] = useState(data);
+  const [carDetails, setCarDetails] = useState<any | null>(null); // New state for car details
+
+  const handleSearch = (query: string) => {
+    const result = data.filter((car) => car.models.some((model) => model.name.toLowerCase().includes(query.toLowerCase())));
+    setFilteredCars(result);
+  };
+
+  const handleManufacturerSelect = (manufacturer: any) => {
+    setSelectedManufacturer(manufacturer);
+    setSelectedModel(null);
+    setCarDetails(null); // Reset car details
+  };
+
+  const handleModelSelect = (model: any) => {
+    setSelectedModel(model);
+    setCarDetails(null); // Reset car details
+  };
+
+  const handleDetailsSelect = (details: any) => {
+    setCarDetails(details);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Container sx={{ minHeight: '100vh', paddingTop: 4 }}>
+      <SearchBar onSearch={handleSearch} />
+      {!carDetails && (
+        <Grid container spacing={2}>
+          {selectedManufacturer ? (
+            selectedManufacturer.models.map((model: any, index: number) => (
+              <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleModelSelect(model)}>
+                <ManufacturerCard manufacturer={model.name} onSelect={() => handleModelSelect(model)} />
+              </Grid>
+            ))
+          ) : (
+            filteredCars.map((car: any, index: number) => (
+              <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleManufacturerSelect(car)}>
+                <ManufacturerCard manufacturer={car.manufacturer} onSelect={() => handleManufacturerSelect(car)} />
+              </Grid>
+            ))
+          )}
+        </Grid>
+      )}
+      {selectedModel && !carDetails && <CarModelDetails model={selectedModel} onDetailsSelect={handleDetailsSelect} />}
+      {carDetails && (
+        <Box sx={{ margin: 2 }}>
+          <Typography variant="h5" sx={{ color: '#D0E355' }}>Car Details</Typography>
+          <Typography variant="body1">Type: {carDetails.type}</Typography>
+          <Typography variant="body1">Transmission: {carDetails.transmission}</Typography>
+          <Typography variant="body1">Price: {carDetails.price}</Typography>
+          <Typography variant="body1">Details: {carDetails.details}</Typography>
+        </Box>
+      )}
+    </Container>
   );
 }

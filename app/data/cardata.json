@@ -1,0 +1,52 @@
+[
+    {
+      "manufacturer": "Hyundai",
+      "models": [
+        {
+          "name": "Creta",
+          "variants": [
+            {
+              "type": "Petrol",
+              "transmission": "Manual",
+              "price": "15000",
+              "details": "Creta SX Petrol Manual details"
+            },
+            {
+              "type": "Diesel",
+              "transmission": "Automatic",
+              "price": "18000",
+              "details": "Creta SX Diesel Automatic details"
+            }
+          ]
+        },
+        {
+          "name": "Venue",
+          "variants": [
+            {
+              "type": "Petrol",
+              "transmission": "Manual",
+              "price": "12000",
+              "details": "Venue S Petrol Manual details"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "manufacturer": "Honda",
+      "models": [
+        {
+          "name": "Civic",
+          "variants": [
+            {
+              "type": "Petrol",
+              "transmission": "Manual",
+              "price": "20000",
+              "details": "Civic V Petrol Manual details"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  
