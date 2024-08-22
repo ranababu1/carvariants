@@ -1,68 +1,100 @@
-"use client";
-
-import { useState } from 'react';
-import { Container, Grid, Box, Typography } from '@mui/material';
-import SearchBar from './components/SearchBar';
+import React from 'react';
 import ManufacturerCard from './components/ManufacturerCard';
-import CarModelDetails from './components/CarModelDetails';
-import data from './data/cardata.json';
+import FeatureCard from './components/FeatureCard';
+import TestimonialCard from './components/TestimonialCard';
+import styles from './page.module.css';
 
 export default function HomePage() {
-  const [selectedManufacturer, setSelectedManufacturer] = useState<any | null>(null);
-  const [selectedModel, setSelectedModel] = useState<any | null>(null);
-  const [filteredCars, setFilteredCars] = useState(data);
-  const [carDetails, setCarDetails] = useState<any | null>(null); // New state for car details
-
-  const handleSearch = (query: string) => {
-    const result = data.filter((car) => car.models.some((model) => model.name.toLowerCase().includes(query.toLowerCase())));
-    setFilteredCars(result);
-  };
-
-  const handleManufacturerSelect = (manufacturer: any) => {
-    setSelectedManufacturer(manufacturer);
-    setSelectedModel(null);
-    setCarDetails(null); // Reset car details
-  };
-
-  const handleModelSelect = (model: any) => {
-    setSelectedModel(model);
-    setCarDetails(null); // Reset car details
-  };
-
-  const handleDetailsSelect = (details: any) => {
-    setCarDetails(details);
-  };
-
   return (
-    <Container sx={{ minHeight: '100vh', paddingTop: 4 }}>
-      <SearchBar onSearch={handleSearch} />
-      {!carDetails && (
-        <Grid container spacing={2}>
-          {selectedManufacturer ? (
-            selectedManufacturer.models.map((model: any, index: number) => (
-              <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleModelSelect(model)}>
-                <ManufacturerCard manufacturer={model.name} onSelect={() => handleModelSelect(model)} />
-              </Grid>
-            ))
-          ) : (
-            filteredCars.map((car: any, index: number) => (
-              <Grid item xs={12} sm={6} md={4} key={index} onClick={() => handleManufacturerSelect(car)}>
-                <ManufacturerCard manufacturer={car.manufacturer} onSelect={() => handleManufacturerSelect(car)} />
-              </Grid>
-            ))
-          )}
-        </Grid>
-      )}
-      {selectedModel && !carDetails && <CarModelDetails model={selectedModel} onDetailsSelect={handleDetailsSelect} />}
-      {carDetails && (
-        <Box sx={{ margin: 2 }}>
-          <Typography variant="h5" sx={{ color: '#D0E355' }}>Car Details</Typography>
-          <Typography variant="body1">Type: {carDetails.type}</Typography>
-          <Typography variant="body1">Transmission: {carDetails.transmission}</Typography>
-          <Typography variant="body1">Price: {carDetails.price}</Typography>
-          <Typography variant="body1">Details: {carDetails.details}</Typography>
-        </Box>
-      )}
-    </Container>
+    <div className={styles.homePage}>
+      <header className={styles.hero}>
+        <h1 className={styles.heroTitle}>Compare Car Variants with Confidence</h1>
+        <p className={styles.heroSubtitle}>Make informed decisions on your next vehicle purchase</p>
+      </header>
+
+      <section className={styles.contentSection}>
+        <h2 className={styles.sectionHeading}>Why Compare Car Variants?</h2>
+        <p className={styles.paragraph}>
+          Whether you're looking to buy a new car or just exploring your options, comparing car variants is essential. Each variant offers unique features, pricing, and specifications that can significantly impact your driving experience and overall satisfaction with your purchase.
+        </p>
+        <p className={styles.paragraph}>
+          Our platform provides comprehensive comparisons across various aspects, including:
+        </p>
+        <ul className={styles.featureList}>
+          <li>Performance specifications</li>
+          <li>Fuel efficiency</li>
+          <li>Safety features</li>
+          <li>Interior comfort and technology</li>
+          <li>Price and value for money</li>
+        </ul>
+      </section>
+
+      <section className={styles.contentSection}>
+        <h2 className={styles.sectionHeading}>How It Works</h2>
+        <div className={styles.stepGrid}>
+          <FeatureCard 
+            title="Select Manufacturers" 
+            description="Choose from a wide range of car manufacturers" 
+            icon="select-icon"
+          />
+          <FeatureCard 
+            title="Pick Models" 
+            description="Browse and select specific car models" 
+            icon="model-icon"
+          />
+          <FeatureCard 
+            title="Compare Variants" 
+            description="View detailed comparisons of different variants" 
+            icon="compare-icon"
+          />
+          <FeatureCard 
+            title="Make Informed Decisions" 
+            description="Use our insights to choose the right car for you" 
+            icon="decision-icon"
+          />
+        </div>
+      </section>
+
+      <section className={styles.contentSection}>
+        <h2 className={styles.sectionHeading}>Featured Car Manufacturers</h2>
+        <div className={styles.cardGrid}>
+          <ManufacturerCard name="Toyota" description="Discover the latest models from Toyota, known for reliability and efficiency" />
+          <ManufacturerCard name="Honda" description="Explore Honda's range of vehicles, blending performance with practicality" />
+          <ManufacturerCard name="Ford" description="Find your perfect Ford model, from rugged trucks to sleek sedans" />
+          <ManufacturerCard name="BMW" description="Experience luxury and performance with BMW's diverse lineup" />
+          <ManufacturerCard name="Tesla" description="Dive into the future of electric vehicles with Tesla's innovative models" />
+          <ManufacturerCard name="Volkswagen" description="Explore Volkswagen's range of practical and stylish vehicles for every need" />
+        </div>
+      </section>
+
+      <section className={styles.contentSection}>
+        <h2 className={styles.sectionHeading}>What Our Users Say</h2>
+        <div className={styles.testimonialGrid}>
+          <TestimonialCard 
+            quote="This comparison tool saved me hours of research. I found the perfect car for my family!"
+            author="Sarah M."
+          />
+          <TestimonialCard 
+            quote="The detailed variant comparisons helped me understand the value of different features. Highly recommended!"
+            author="John D."
+          />
+          <TestimonialCard 
+            quote="As a car enthusiast, I love how comprehensive the comparisons are. It's my go-to resource now."
+            author="Mike R."
+          />
+        </div>
+      </section>
+
+      <section className={styles.contentSection}>
+        <h2 className={styles.sectionHeading}>Stay Informed</h2>
+        <p className={styles.paragraph}>
+          The automotive industry is constantly evolving. Stay up-to-date with the latest news, reviews, and comparisons by subscribing to our newsletter.
+        </p>
+        <form className={styles.newsletterForm}>
+          <input type="email" placeholder="Enter your email" className={styles.emailInput} />
+          <button type="submit" className={styles.submitButton}>Subscribe</button>
+        </form>
+      </section>
+    </div>
   );
 }

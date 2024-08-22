@@ -1,0 +1,30 @@
+/* app/components/Footer.module.css */
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 40px;
+    border-top: 1px solid #444;
+  }
+  
+  .footerLinks {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footerLinks li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  .footerLinks a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footerLinks a:hover {
+    text-decoration: underline;
+  }
+  

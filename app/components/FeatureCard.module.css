@@ -1,0 +1,38 @@
+/* FeatureCard.module.css */
+.featureCard {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .iconContainer {
+    margin-bottom: 15px;
+  }
+  
+  .icon {
+    font-size: 2rem;
+    color: #007bff;
+  }
+  
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* Add specific icon styles here, e.g.: */
+  .selectIcon {
+    /* Custom styles for select icon */
+  }
+  
+  .modelIcon {
+    /* Custom styles for model icon */
+  }
+  
+  /* Add more icon styles as needed */

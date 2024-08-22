@@ -1,0 +1,17 @@
+/* TestimonialCard.module.css */
+.testimonialCard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .quote {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .author {
+    text-align: right;
+    font-weight: bold;
+  }
